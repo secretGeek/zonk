@@ -34,8 +34,9 @@ A zonk has this syntax:
 
 In English:
 
-> A zonk starts with an opening curly bracket (`{`) and is immediately following by a `zonk-type-identifier`, then a colon.
-> Next comes the content of the zonk. The content may be zero characters long, or long. It can contain anything. But it cannot contains a colon followed by a closing curly bracket. The zonk ends with a colon (`:`) and a closing curly bracket (`}`).
+> A zonk starts with an opening curly bracket (`{`) and is immediately followed by a `zonk-type-identifier`, then a colon.
+>
+> Next comes the content of the zonk. The content may be zero characters long, or longer. The content can contain anything. But it cannot contain a colon followed by a closing curly bracket. The zonk ends when a colon (`:`) and a closing curly bracket (`}`) is reached.
 
 `draft` `todo` This regular expression should find zonks in a document:
 
@@ -59,9 +60,9 @@ A `zonk-type identifier` is a short and meanigful name that follows a few rules.
 
     ^[a-z][a-z0-9._\-]*$
 
-### `zs:blk.syn.typ.ids.irn` zonk type identifiers don't include colons.
+### `zs:blk.syn.typ.ids.irn` zonk type identifiers don't include colons, spaces, or new-lines.
 
-The iron-law of zonk type identifiers is that they're at least one character long and don't include colons.
+The iron-law of zonk type identifiers is that they're at least one character long and don't include colons, spaces, or new-lines.
 
 This makes finding them a "regular" parsing problem and requires no escape rules.
 
@@ -69,12 +70,12 @@ This makes finding them a "regular" parsing problem and requires no escape rules
 
 `draft` This regular expression should match a zonk type identifier on its own, if it obeys the iron-law of zonk identifiers.
 
-    ^[^:]+$
+    ^[^: \n]+$
 
 
-### `zs:blk.syn.cnt` zonk content doesn't include the substring ":}"
+### `zs:blk.syn.nst` You can't nest zonks. 
 
-You can't nest zonks. (Zonks are *regular*). This takes away a lot of complexity that would arise for people writing markdown that includes zonk blocks.
+Because zonk content doesn't include the substring ":}" you can't nest zonks. (Zonks are *regular*). This takes away a lot of complexity that would arise for people who write markdown containing zonks.
 
 (A different set of standard fragments could be written to cover "nestable" zonks. But that is not *this* set of standard fragments.)
 
